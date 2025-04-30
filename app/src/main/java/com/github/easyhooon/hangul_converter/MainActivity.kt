@@ -36,8 +36,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.easyhooon.hangul_converter.ui.theme.HangulConverterTheme
 
 class MainActivity : ComponentActivity() {
