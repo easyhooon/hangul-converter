@@ -56,6 +56,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -414,6 +417,176 @@ fun ChatMessageItem(
                     }
                 }
             }
+        }
+    }
+}
+
+class MessagePreviewParameterProvider : PreviewParameterProvider<Message> {
+    override val values = sequenceOf(
+        Message(
+            id = UUID.randomUUID().toString(),
+            content = "안녕하세요!",
+            isFromMe = false,
+            isConverted = false
+        ),
+        Message(
+            id = UUID.randomUUID().toString(),
+            content = "dlwlgns!",
+            isFromMe = false,
+            isConverted = false
+        ),
+        Message(
+            id = UUID.randomUUID().toString(),
+            content = "안녕하세요!",
+            isFromMe = false,
+            isConverted = true
+        ),
+        Message(
+            id = UUID.randomUUID().toString(),
+            content = "반갑습니다!",
+            isFromMe = true,
+            isConverted = false
+        )
+    )
+}
+
+@Preview(
+    name = "Chat Message Item",
+    showBackground = true,
+    backgroundColor = 0xFFF0F0F0,
+    widthDp = 360
+)
+@Composable
+fun ChatMessageItemPreview(
+    @PreviewParameter(MessagePreviewParameterProvider::class) message: Message
+) {
+    HangulConverterTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(8.dp)
+        ) {
+            ChatMessageItem(
+                message = message,
+                onLongClick = {},
+                onCopyClick = {}
+            )
+        }
+    }
+}
+
+@Preview(
+    name = "Chat App",
+    showBackground = true,
+    widthDp = 360,
+    heightDp = 720
+)
+@Composable
+fun ChatSampleAppPreview() {
+    HangulConverterTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            val mockViewModel = ChatViewModel().apply {
+                messages.clear()
+                messages.addAll(
+                    listOf(
+                        Message(content = "안녕하세요!", isFromMe = false),
+                        Message(content = "반갑습니다", isFromMe = true),
+                        Message(content = "dlwlgns!", isFromMe = false),
+                        Message(content = "감사합니다", isFromMe = true, isConverted = true),
+                        Message(content = "dkssudgktpdy?", isFromMe = false),
+                        Message(content = "내일 뵐게요", isFromMe = false)
+                    )
+                )
+            }
+
+            ChatSampleApp(viewModel = mockViewModel)
+        }
+    }
+}
+
+@Preview(
+    name = "Message Options",
+    showBackground = true,
+    widthDp = 360
+)
+@Composable
+fun MessageOptionsPreview() {
+    HangulConverterTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "메시지 옵션",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            val message = Message(
+                id = UUID.randomUUID().toString(),
+                content = "dlwlgns!",
+                isFromMe = false,
+                isConverted = false
+            )
+
+            ChatMessageItem(
+                message = message,
+                onLongClick = {},
+                onCopyClick = {}
+            )
+
+            val convertedMessage = Message(
+                id = UUID.randomUUID().toString(),
+                content = "안녕!",
+                isFromMe = false,
+                isConverted = true
+            )
+
+            ChatMessageItem(
+                message = convertedMessage,
+                onLongClick = {},
+                onCopyClick = {}
+            )
+        }
+    }
+}
+
+@Preview(
+    name = "Full Chat Interface",
+    showBackground = true,
+    device = "spec:width=411dp,height=891dp,dpi=420,isRound=false,chinSize=0dp,orientation=portrait"
+)
+@Composable
+fun FullChatInterfacePreview() {
+    HangulConverterTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            val mockViewModel = ChatViewModel().apply {
+                messages.clear()
+                messages.addAll(
+                    listOf(
+                        Message(content = "안녕하세요! 어서오세요.", isFromMe = false),
+                        Message(content = "반갑습니다", isFromMe = true),
+                        Message(content = "dlwlgns! dkssudhk fnlqslek?", isFromMe = false),
+                        Message(content = "rkatkgkqslek", isFromMe = true, isConverted = false),
+                        Message(content = "감사합니다. 도움이 필요하시면 말씀해주세요.", isFromMe = true, isConverted = true),
+                        Message(content = "dkssudrk tpdy dkseusrkqtdlek", isFromMe = false),
+                        Message(content = "dkssud tjqjel qlalfgkdy?", isFromMe = false),
+                        Message(content = "내일 뵐게요", isFromMe = false)
+                    )
+                )
+                messageText = "여기에 메시지를 입력하세요..."
+            }
+
+            ChatSampleApp(viewModel = mockViewModel)
         }
     }
 }
