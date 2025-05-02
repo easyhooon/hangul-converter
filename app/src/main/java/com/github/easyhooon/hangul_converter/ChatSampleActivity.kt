@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -36,7 +39,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -197,100 +199,89 @@ fun ChatSampleApp(viewModel: ChatViewModel = viewModel()) {
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("한글 변환 채팅 샘플") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        TopAppBar(
+            title = { Text("한글 변환 채팅 샘플") },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
             )
-        },
-        bottomBar = {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.background,
-                tonalElevation = 8.dp
-            ) {
-                Row(
+        )
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp)
+        ) {
+            item {
+                Card(
                     modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    OutlinedTextField(
-                        value = viewModel.messageText,
-                        onValueChange = { viewModel.messageText = it },
-                        placeholder = { Text("메시지를 입력하세요") },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 8.dp),
-                        singleLine = true
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
                     )
-
-                    IconButton(
-                        onClick = { viewModel.sendMessage() },
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary)
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = "전송",
-                            tint = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "메시지 버블을 길게 탭하면 한글 변환 옵션이 표시됩니다.",
+                            style = MaterialTheme.typography.bodyLarge,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
             }
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            LazyColumn(
-                state = lazyListState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                contentPadding = PaddingValues(vertical = 8.dp)
-            ) {
-                item {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        )
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = "메시지 버블을 길게 탭하면 한글 변환 옵션이 표시됩니다.",
-                                style = MaterialTheme.typography.bodyLarge,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                }
 
-                items(viewModel.messages) { message ->
-                    ChatMessageItem(
-                        message = message,
-                        onLongClick = { id ->
-                            scope.launch {
-                                viewModel.convertMessage(id)
-                            }
-                        },
-                        onCopyClick = { content ->
-                            clipboardManager.setText(AnnotatedString(content))
+            items(viewModel.messages) { message ->
+                ChatMessageItem(
+                    message = message,
+                    onLongClick = { id ->
+                        scope.launch {
+                            viewModel.convertMessage(id)
                         }
-                    )
-                }
+                    },
+                    onCopyClick = { content ->
+                        clipboardManager.setText(AnnotatedString(content))
+                    }
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .imePadding()
+                .navigationBarsPadding()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = viewModel.messageText,
+                onValueChange = { viewModel.messageText = it },
+                placeholder = { Text("메시지를 입력하세요") },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp),
+                singleLine = true
+            )
+
+            IconButton(
+                onClick = { viewModel.sendMessage() },
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "전송",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }
@@ -362,10 +353,14 @@ fun ChatMessageItem(
                         text = formattedTime,
                         style = MaterialTheme.typography.bodySmall,
                         color = if (message.isFromMe) {
-                            if (message.isConverted) MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
+                            if (message.isConverted) MaterialTheme.colorScheme.onSecondaryContainer.copy(
+                                alpha = 0.7f
+                            )
                             else MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
                         } else {
-                            if (message.isConverted) MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f)
+                            if (message.isConverted) MaterialTheme.colorScheme.onTertiaryContainer.copy(
+                                alpha = 0.7f
+                            )
                             else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         }
                     )
@@ -577,7 +572,11 @@ fun FullChatInterfacePreview() {
                         Message(content = "반갑습니다", isFromMe = true),
                         Message(content = "dlwlgns! dkssudhk fnlqslek?", isFromMe = false),
                         Message(content = "rkatkgkqslek", isFromMe = true, isConverted = false),
-                        Message(content = "감사합니다. 도움이 필요하시면 말씀해주세요.", isFromMe = true, isConverted = true),
+                        Message(
+                            content = "감사합니다. 도움이 필요하시면 말씀해주세요.",
+                            isFromMe = true,
+                            isConverted = true
+                        ),
                         Message(content = "dkssudrk tpdy dkseusrkqtdlek", isFromMe = false),
                         Message(content = "dkssud tjqjel qlalfgkdy?", isFromMe = false),
                         Message(content = "내일 뵐게요", isFromMe = false)

@@ -16,17 +16,18 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.HangulConverter">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <activity
             android:name=".ChatSampleActivity"
             android:exported="true"
-            android:theme="@style/Theme.HangulConverter">
+            android:theme="@style/Theme.HangulConverter"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
