@@ -133,15 +133,15 @@ class ChatViewModel @Inject constructor(
 // 기본 변환
 Qwerty2Hangul.engToKor("dkssud") // 안녕
 
-// 복잡한 문장
-Qwerty2Hangul.engToKor("gksmf qkdgks dlqfur") // 한글 변환 테스트
+// 자음만 있는 경우
+Qwerty2Hangul.engToKor("r") // ㄱ
+Qwerty2Hangul.engToKor("rk") // 가
 
 // 받침이 있는 경우
 Qwerty2Hangul.engToKor("gksrmf") // 한글
 
-// 자음만 있는 경우
-Qwerty2Hangul.engToKor("r") // ㄱ
-Qwerty2Hangul.engToKor("rk") // 가
+// 복잡한 문장
+Qwerty2Hangul.engToKor("gksmf qkdgks dlqfur") // 한글 변환 테스트
 ```
 
 ## Features
