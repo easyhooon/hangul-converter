@@ -61,7 +61,6 @@ fun main() {
 ### 채팅 앱에서의 사용 예시
 
 > 💡 **전체 예제 코드는 [샘플 앱](https://github.com/easyhooon/qwerty2hangul/tree/main/app/src/main/java/com/github/easyhooon/qwerty2hangul)에서 확인할 수 있습니다.**
-```kotlin
 
 ```kotlin
 data class Message(
