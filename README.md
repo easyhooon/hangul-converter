@@ -2,7 +2,7 @@
 
 QWERTY 키보드로 입력한 영타를 한글로 변환하는 순수 Kotlin 라이브러리입니다.
 
-## 배경
+## Background
 
 한국어를 사용하는 사람들은 종종 한글 입력 모드로 전환하지 않고 영문 키보드로 한글을 입력하는 실수를 합니다.
 특히 **채팅 앱**에서 메시지를 보낸 후에야 영타로 입력했다는 것을 깨닫는 경우가 많습니다.
@@ -11,7 +11,7 @@ QWERTY 키보드로 입력한 영타를 한글로 변환하는 순수 Kotlin 라
 
 이 라이브러리는 이러한 영타 메시지를 원래 의도한 한글로 변환할 수 있게 해줍니다.
 
-## 설치
+## Installation
 
 ### Gradle (Kotlin DSL)
 
@@ -41,7 +41,7 @@ dependencies {
 
 최신 버전은 [Releases](https://github.com/easyhooon/qwerty2hangul/releases)에서 확인하세요.
 
-## 사용법
+## Usage
 
 ### 기본 사용
 
@@ -144,14 +144,13 @@ Qwerty2Hangul.engToKor("r") // ㄱ
 Qwerty2Hangul.engToKor("rk") // 가
 ```
 
-## 주요 기능
+## Features
 
 - ✅ 순수 Kotlin JVM 라이브러리 (Android 의존성 없음)
 - ✅ 초성, 중성, 종성 완벽 지원
 - ✅ 단독 자음 처리
 - ✅ 복합 모음 지원 (ㅘ, ㅙ, ㅚ 등)
 - ✅ 복합 자음 지원 (ㄳ, ㄵ, ㄶ 등)
-- ✅ 단독 자음 처리
 
 ## 지원 범위
 
