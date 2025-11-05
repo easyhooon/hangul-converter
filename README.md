@@ -164,6 +164,9 @@ Qwerty2Hangul.engToKor("gksmf qkdgks dlqfur") // 한글 변환 테스트
 
 천지인, 나랏글 등의 한글 전용 키보드는 애초에 한글 입력 모드만 지원하므로 영타 문제가 발생하지 않습니다.
 
+## Release Article
+[https://www.linkedin.com/posts/easyhooon_github-easyhooonqwerty2hangul-activity-7391702199543734272-JXNV?utm_source=share&utm_medium=member_android&rcm=ACoAADeYy2YBzSJPCJqjzoaiEve7gxLPUaiMBqA](https://shorturl.at/Sqm3P)
+
 ## Contribution
 
 이슈와 PR은 언제나 환영합니다!
