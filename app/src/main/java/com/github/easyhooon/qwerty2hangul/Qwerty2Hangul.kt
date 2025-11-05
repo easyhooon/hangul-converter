@@ -1,7 +1,7 @@
 // QwertyHangul.kt
 package com.github.easyhooon.qwerty2hangul
 
-object QwertyHangul {
+object Qwerty2Hangul {
     /**
      * QWERTY 키보드로 입력한 영타 한글을 실제 한글로 변환
      * @param eng 변환할 영어 텍스트

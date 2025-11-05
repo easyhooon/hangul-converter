@@ -65,7 +65,7 @@ fun Qwerty2HangulApp() {
     val clipboardManager = LocalClipboardManager.current
 
     fun convertToHangul() {
-        outputText = QwertyHangul.engToKor(inputText)
+        outputText = Qwerty2Hangul.engToKor(inputText)
     }
 
     Column(

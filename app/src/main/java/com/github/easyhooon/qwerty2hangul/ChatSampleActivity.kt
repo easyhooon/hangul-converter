@@ -167,7 +167,7 @@ class ChatViewModel : ViewModel() {
             }
 
             // 영어로 타이핑된 한글을 변환
-            val converted = QwertyHangul.engToKor(message.content)
+            val converted = Qwerty2Hangul.engToKor(message.content)
 
             // 변환 결과가 다를 경우에만 변환된 메시지 추가
             if (converted != message.content) {
