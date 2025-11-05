@@ -12,6 +12,8 @@ QWERTY 키보드로 입력한 영타를 한글로 변환하는 순수 Kotlin 라
 
 이 라이브러리는 이러한 영타 메시지를 원래 의도한 한글로 변환할 수 있게 해줍니다.
 
+https://github.com/user-attachments/assets/29b9bb1f-bdb7-4d00-8062-b49578a7efa1
+
 ## Installation
 
 ### Gradle (Kotlin DSL)
@@ -57,6 +59,9 @@ fun main() {
 ```
 
 ### 채팅 앱에서의 사용 예시
+
+> 💡 **전체 예제 코드는 [app 모듈](https://github.com/easyhooon/qwerty2hangul/tree/main/app)에서 확인할 수 있습니다.**
+```kotlin
 
 ```kotlin
 data class Message(
