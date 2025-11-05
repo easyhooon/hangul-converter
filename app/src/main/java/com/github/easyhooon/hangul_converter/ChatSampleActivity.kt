@@ -17,16 +17,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -95,7 +94,8 @@ data class Message(
     val content: String,
     val timestamp: Long = System.currentTimeMillis(),
     val isFromMe: Boolean = true,
-    val isConverted: Boolean = false
+    val isConverted: Boolean = false,
+    val originalContent: String? = null
 )
 
 class ChatViewModel : ViewModel() {
@@ -108,12 +108,11 @@ class ChatViewModel : ViewModel() {
 
     private fun addInitialMessages() {
         val initialMessages = listOf(
-            Message(content = "안녕하세요!", isFromMe = false),
-            Message(content = "반갑습니다", isFromMe = true),
-            Message(content = "dlwlgns!", isFromMe = false), // 영어로 타이핑한 한글
-            Message(content = "dkssudgktpdy?", isFromMe = false), // 영어로 타이핑한 한글
-            Message(content = "rkatkgkqslek", isFromMe = true), // 영어로 타이핑한 한글
-            Message(content = "내일 뵐게요", isFromMe = false)
+            Message(content = "dkssudgktpdy!", isFromMe = false), // 안녕하세요!
+            Message(content = "qksrkdnjdy!", isFromMe = true), // 반가워요!
+            Message(content = "wjeh qksrkdnjdy!!", isFromMe = false), // 저도 반가워요!
+            Message(content = "자주 연락해요~", isFromMe = true),
+            Message(content = "dkfrpTdjdy~ whgdms gkfn qhsody~", isFromMe = false) // 알겠어요~ 좋은 하루 보내요~
         )
 
         messages.addAll(initialMessages)
@@ -128,34 +127,23 @@ class ChatViewModel : ViewModel() {
             MainScope().launch {
                 delay(2000)
 
-                // 간단한 응답 로직 - 영어로 입력된 한글이면 그대로 응답, 아니면 랜덤 응답
-                val responseText = if (isEnglishTypedKorean(newMessage.content)) {
-                    newMessage.content // 영어로 타이핑된 한글이면 그대로 응답
-                } else {
-                    getRandomResponse()
-                }
+                // 항상 영타 한글로 랜덤 응답하여 변환 기능을 시연할 수 있도록 함
+                val responseText = getRandomResponse()
 
                 messages.add(Message(content = responseText, isFromMe = false))
             }
         }
     }
 
-    // 단순 영어로 타이핑된 한글인지 확인 (매우 간단한 휴리스틱)
-    private fun isEnglishTypedKorean(text: String): Boolean {
-        // 한글 자음과 모음에 대응되는 영어 문자들이 일정 비율 이상 포함되면 영타 한글로 간주
-        val koreanCharPattern = ".*[qwertyuiopasd fghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM]{2,}.*"
-        return text.matches(Regex(koreanCharPattern))
-    }
-
     // 랜덤 응답 생성
     private fun getRandomResponse(): String {
         val responses = listOf(
-            "네 알겠습니다",
-            "그렇군요",
-            "좋은 하루 되세요!",
-            "dlwlgns!", // 일부러 영어로 타이핑한 메시지
-            "dkssudgktpdy?", // 일부러 영어로 타이핑한 메시지
-            "rkatkgkqslek" // 일부러 영어로 타이핑한 메시지
+            "rhoscksgdk!", // 괜찮아!
+            "dhsmf gkfn wkf qhso~", // 오늘 하루 잘 보내~
+            "rhakdnj!", // 고마워!
+            "dkssud!", // 안녕!
+            "wjeh qksrkdnjdy!", // 저도 반가워요!
+            "tnrhgktpdy~" // 수고하세요~
         )
         return responses.random()
     }
@@ -168,7 +156,13 @@ class ChatViewModel : ViewModel() {
 
             // 이미 변환되었다면 원본으로 복원
             if (message.isConverted) {
-                // 원본 메시지를 찾는 로직이 필요하지만 이 예제에서는 생략
+                message.originalContent?.let { original ->
+                    messages[index] = message.copy(
+                        content = original,
+                        isConverted = false,
+                        originalContent = null
+                    )
+                }
                 return
             }
 
@@ -179,7 +173,8 @@ class ChatViewModel : ViewModel() {
             if (converted != message.content) {
                 messages[index] = message.copy(
                     content = converted,
-                    isConverted = true
+                    isConverted = true,
+                    originalContent = message.content
                 )
             }
         }
@@ -228,7 +223,7 @@ fun ChatSampleApp(viewModel: ChatViewModel = viewModel()) {
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "메시지 버블을 길게 탭하면 한글 변환 옵션이 표시됩니다.",
+                            text = "메시지 버블을 탭하면 한글 변환 옵션이 표시됩니다.",
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth()
@@ -426,7 +421,7 @@ class MessagePreviewParameterProvider : PreviewParameterProvider<Message> {
         ),
         Message(
             id = UUID.randomUUID().toString(),
-            content = "dlwlgns!",
+            content = "dkssudgktpdy!",
             isFromMe = false,
             isConverted = false
         ),
@@ -568,21 +563,14 @@ fun FullChatInterfacePreview() {
                 messages.clear()
                 messages.addAll(
                     listOf(
-                        Message(content = "안녕하세요! 어서오세요.", isFromMe = false),
-                        Message(content = "반갑습니다", isFromMe = true),
-                        Message(content = "dlwlgns! dkssudhk fnlqslek?", isFromMe = false),
-                        Message(content = "rkatkgkqslek", isFromMe = true, isConverted = false),
-                        Message(
-                            content = "감사합니다. 도움이 필요하시면 말씀해주세요.",
-                            isFromMe = true,
-                            isConverted = true
-                        ),
-                        Message(content = "dkssudrk tpdy dkseusrkqtdlek", isFromMe = false),
-                        Message(content = "dkssud tjqjel qlalfgkdy?", isFromMe = false),
-                        Message(content = "내일 뵐게요", isFromMe = false)
+                        Message(content = "dkssudgktpdy!", isFromMe = false), // 안녕하세요!
+                        Message(content = "qksrkdnjdy!", isFromMe = true), // 반가워요!
+                        Message(content = "wjeh qksrkdnjdy!!", isFromMe = false), // 저도 반가워요!
+                        Message(content = "자주 연락해요~", isFromMe = true),
+                        Message(content = "dkfrpTdjdy~! whgdms gkfn qhsody~", isFromMe = false) // 알겠어요~ 좋은 하루 보내요~
                     )
                 )
-                messageText = "여기에 메시지를 입력하세요..."
+                messageText = ""
             }
 
             ChatSampleApp(viewModel = mockViewModel)
