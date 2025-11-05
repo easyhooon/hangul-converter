@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "qwerty2hangul"
 include(":app")
- 
+include(":qwerty2hangul")
