@@ -1,4 +1,4 @@
-package com.github.easyhooon.hangul_converter
+package com.github.easyhooon.qwerty2hangul
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,19 +36,19 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.github.easyhooon.hangul_converter.ui.theme.HangulConverterTheme
+import com.github.easyhooon.qwerty2hangul.ui.theme.Qwerty2HangulTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            HangulConverterTheme {
+            Qwerty2HangulTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HangulConverterApp()
+                    Qwerty2HangulApp()
                 }
             }
         }
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HangulConverterApp() {
+fun Qwerty2HangulApp() {
     var inputText by remember { mutableStateOf("") }
     var outputText by remember { mutableStateOf("") }
     var showCopiedMessage by remember { mutableStateOf(false) }
@@ -65,7 +65,7 @@ fun HangulConverterApp() {
     val clipboardManager = LocalClipboardManager.current
 
     fun convertToHangul() {
-        outputText = HangulConverter.engToKor(inputText)
+        outputText = QwertyHangul.engToKor(inputText)
     }
 
     Column(

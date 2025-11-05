@@ -1,4 +1,4 @@
-package com.github.easyhooon.hangul_converter.ui.theme
+package com.github.easyhooon.qwerty2hangul.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -33,7 +33,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun HangulConverterTheme(
+fun Qwerty2HangulTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

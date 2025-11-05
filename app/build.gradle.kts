@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.github.easyhooon.hangul_converter"
+    namespace = "com.github.easyhooon.qwerty2hangul"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.github.easyhooon.hangul_converter"
+        applicationId = "com.github.easyhooon.qwerty2hangul"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

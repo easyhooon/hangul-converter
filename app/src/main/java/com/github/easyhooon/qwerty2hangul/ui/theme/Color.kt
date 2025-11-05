@@ -1,4 +1,4 @@
-package com.github.easyhooon.hangul_converter.ui.theme
+package com.github.easyhooon.qwerty2hangul.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

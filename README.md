@@ -1,1 +1,1 @@
-# hangul-converter
+# qwerty2hangul

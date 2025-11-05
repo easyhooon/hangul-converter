@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "hangul-converter"
+rootProject.name = "qwerty2hangul"
 include(":app")
  

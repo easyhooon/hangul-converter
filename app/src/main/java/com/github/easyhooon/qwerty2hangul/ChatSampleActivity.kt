@@ -1,4 +1,4 @@
-package com.github.easyhooon.hangul_converter
+package com.github.easyhooon.qwerty2hangul
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -63,7 +63,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.github.easyhooon.hangul_converter.ui.theme.HangulConverterTheme
+import com.github.easyhooon.qwerty2hangul.ui.theme.Qwerty2HangulTheme
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -77,7 +77,7 @@ class ChatSampleActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            HangulConverterTheme {
+            Qwerty2HangulTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -167,7 +167,7 @@ class ChatViewModel : ViewModel() {
             }
 
             // 영어로 타이핑된 한글을 변환
-            val converted = HangulConverter.engToKor(message.content)
+            val converted = QwertyHangul.engToKor(message.content)
 
             // 변환 결과가 다를 경우에만 변환된 메시지 추가
             if (converted != message.content) {
@@ -450,7 +450,7 @@ class MessagePreviewParameterProvider : PreviewParameterProvider<Message> {
 fun ChatMessageItemPreview(
     @PreviewParameter(MessagePreviewParameterProvider::class) message: Message
 ) {
-    HangulConverterTheme {
+    Qwerty2HangulTheme {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -474,7 +474,7 @@ fun ChatMessageItemPreview(
 )
 @Composable
 fun ChatSampleAppPreview() {
-    HangulConverterTheme {
+    Qwerty2HangulTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -505,7 +505,7 @@ fun ChatSampleAppPreview() {
 )
 @Composable
 fun MessageOptionsPreview() {
-    HangulConverterTheme {
+    Qwerty2HangulTheme {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -554,7 +554,7 @@ fun MessageOptionsPreview() {
 )
 @Composable
 fun FullChatInterfacePreview() {
-    HangulConverterTheme {
+    Qwerty2HangulTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background

@@ -1,9 +1,9 @@
-// HangulConverter.kt
-package com.github.easyhooon.hangul_converter
+// QwertyHangul.kt
+package com.github.easyhooon.qwerty2hangul
 
-object HangulConverter {
+object QwertyHangul {
     /**
-     * 영어 키보드로 친 한글을 실제 한글로 변환
+     * QWERTY 키보드로 입력한 영타 한글을 실제 한글로 변환
      * @param eng 변환할 영어 텍스트
      * @return 변환된 한글 텍스트
      */
