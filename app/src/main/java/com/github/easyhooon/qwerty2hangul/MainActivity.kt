@@ -20,7 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,11 +44,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Qwerty2HangulTheme {
-                Surface(
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Qwerty2HangulApp()
+                    containerColor = MaterialTheme.colorScheme.background
+                ) { innerPadding ->
+                    Qwerty2HangulApp(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -56,7 +58,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Qwerty2HangulApp() {
+fun Qwerty2HangulApp(
+    modifier: Modifier = Modifier,
+) {
     var inputText by remember { mutableStateOf("") }
     var outputText by remember { mutableStateOf("") }
     var showCopiedMessage by remember { mutableStateOf(false) }
@@ -69,9 +73,9 @@ fun Qwerty2HangulApp() {
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -185,5 +189,7 @@ fun Qwerty2HangulApp() {
                 Text("• dnjwhsgkwkrh → 감사합니다")
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
