@@ -184,9 +184,9 @@ fun Qwerty2HangulApp(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("• dlwlgns → 안녕")
-                Text("• dlatlqkftodi → 반갑습니다")
-                Text("• dnjwhsgkwkrh → 감사합니다")
+                Text("• dkssud → 안녕")
+                Text("• qksrkqtmqslek → 반갑습니다")
+                Text("• rkatkgkqslek → 감사합니다")
             }
         }
 
